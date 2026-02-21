@@ -36,7 +36,7 @@ app = FastAPI(
 allowed_origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://emergence-software-full-stack-role-assignment-agyhxy3bs.vercel.app",
+    "https://emergence-software-full-stack-role.vercel.app/",
 ]
 # Also allow any origin set via environment variable
 frontend_url = os.getenv("FRONTEND_URL", "")
