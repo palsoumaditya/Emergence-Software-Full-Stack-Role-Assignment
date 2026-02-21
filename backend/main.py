@@ -38,14 +38,17 @@ allowed_origins = [
     "http://127.0.0.1:3000",
     "https://emergence-software-full-stack-role.vercel.app",
 ]
-# Also allow any origin set via environment variable
-frontend_url = os.getenv("FRONTEND_URL", "")
+
+# Clean environment variable URL and add to allowed origins
+frontend_url = os.getenv("FRONTEND_URL", "").strip().rstrip("/")
 if frontend_url and frontend_url not in allowed_origins:
     allowed_origins.append(frontend_url)
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=allowed_origins,
+    # Allow any subdomain on vercel.app for this project (useful for preview deployments)
+    allow_origin_regex=r"https://emergence-software-full-stack-role.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

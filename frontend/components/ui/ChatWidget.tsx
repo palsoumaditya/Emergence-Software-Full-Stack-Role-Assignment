@@ -44,7 +44,7 @@ export default function ChatWidget() {
     setSessionId(sid);
 
     // Load history from backend
-    fetch(`${BACKEND_URL}/api/chat/history/${sid}`)
+    fetch(`${BACKEND_URL.replace(/\/$/, "")}/api/chat/history/${sid}`, { mode: "cors" })
       .then((res) => res.json())
       .then((data) => {
         if (data.messages && data.messages.length > 0) {
@@ -91,8 +91,9 @@ export default function ChatWidget() {
       setIsLoading(true);
 
       try {
-        const res = await fetch(`${BACKEND_URL}/api/chat`, {
+        const res = await fetch(`${BACKEND_URL.replace(/\/$/, "")}/api/chat`, {
           method: "POST",
+          mode: "cors",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             message: messageText,
