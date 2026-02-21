@@ -3,11 +3,15 @@ FastAPI backend for the portfolio AI chat.
 Provides endpoints for chat interaction and history retrieval.
 """
 
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import uuid
+from dotenv import load_dotenv
+
+load_dotenv()
 
 from database import init_db, save_message, get_chat_history
 from chat_engine import get_ai_response
@@ -34,7 +38,7 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:3000",
         "http://127.0.0.1:3000",
-        "https://soumadityapal.in",
+        os.getenv("FRONTEND_URL", ""),
     ],
     allow_credentials=True,
     allow_methods=["*"],
