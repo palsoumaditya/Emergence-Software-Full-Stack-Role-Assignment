@@ -1,16 +1,19 @@
 """
-Groq-powered AI chat engine for the portfolio.
+OpenRouter-powered AI chat engine for the portfolio.
 Provides conversational responses about Soumaditya Pal's resume and experience.
 """
 
 import os
-from groq import Groq
+from openai import OpenAI
 from dotenv import load_dotenv
 from resume_data import get_resume_context
 
 load_dotenv()
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = OpenAI(
+    base_url="https://openrouter.ai/api/v1",
+    api_key=os.getenv("OPENROUTER_API_KEY"),
+)
 
 SYSTEM_PROMPT = f"""You are an AI assistant embedded in Soumaditya Pal's personal portfolio website. Your role is to help visitors learn about Soumaditya by answering questions about his resume, skills, projects, experience, and background.
 
@@ -31,7 +34,7 @@ RESUME DATA:
 
 async def get_ai_response(user_message: str, chat_history: list[dict]) -> str:
     """
-    Generate an AI response using Groq's API.
+    Generate an AI response using OpenRouter's API.
     
     Args:
         user_message: The user's current message
@@ -52,12 +55,12 @@ async def get_ai_response(user_message: str, chat_history: list[dict]) -> str:
     try:
         chat_completion = client.chat.completions.create(
             messages=messages,
-            model="llama-3.3-70b-versatile",
+            model="meta-llama/llama-3.3-70b-instruct",
             temperature=0.7,
             max_tokens=1024,
             top_p=0.9,
         )
         return chat_completion.choices[0].message.content
     except Exception as e:
-        print(f"Groq API error: {e}")
+        print(f"OpenRouter API error: {e}")
         return "I'm sorry, I'm having trouble processing your request right now. Please try again in a moment."
