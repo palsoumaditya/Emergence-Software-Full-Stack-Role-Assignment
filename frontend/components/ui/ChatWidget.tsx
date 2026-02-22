@@ -304,7 +304,7 @@ export default function ChatWidget() {
                 </button>
               </div>
               <p className="text-[10px] text-muted-foreground/50 text-center mt-2">
-                Powered by Groq AI • Responses based on resume data
+                Powered by AI • Responses based on resume data
               </p>
             </div>
           </motion.div>
