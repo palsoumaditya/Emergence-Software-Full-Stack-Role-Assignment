@@ -36,23 +36,26 @@ app = FastAPI(
 allowed_origins = [
     "http://localhost:3000",
     "http://127.0.0.1:3000",
-    "https://emergence-software-full-stack-role.vercel.app",
 ]
 
-# Clean environment variable URL and add to allowed origins
+# Add the production frontend URL from environment variable
 frontend_url = os.getenv("FRONTEND_URL", "").strip().rstrip("/")
 if frontend_url and frontend_url not in allowed_origins:
     allowed_origins.append(frontend_url)
 
-app.add_middleware(
-    CORSMiddleware,
+# Build a regex for Vercel preview deployments based on the FRONTEND_URL
+allow_origin_regex = os.getenv("CORS_ORIGIN_REGEX", "")
+
+cors_kwargs: dict = dict(
     allow_origins=allowed_origins,
-    # Allow any subdomain on vercel.app for this project (useful for preview deployments)
-    allow_origin_regex=r"https://emergence-software-full-stack-role.*\.vercel\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+if allow_origin_regex:
+    cors_kwargs["allow_origin_regex"] = allow_origin_regex
+
+app.add_middleware(CORSMiddleware, **cors_kwargs)
 
 
 # --- Request/Response Models ---
