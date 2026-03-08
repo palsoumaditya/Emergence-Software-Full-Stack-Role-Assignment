@@ -102,7 +102,7 @@ export default function Hero() {
         
         <div className="flex flex-row gap-4">
           <a 
-            href="https://drive.google.com/file/d/181WYd5PwA8iQGCR2Zje0ZNmwageZzThn/view?usp=drive_link" 
+            href="https://drive.google.com/file/d/1vHPkIN3fbcKmyjBYz7InQ0jPzIhoaxT1/view?usp=drive_link" 
             target="_blank"
             rel="noopener noreferrer"
             className="px-6 md:px-8 py-3 bg-foreground text-background rounded-full font-bold text-sm md:text-base hover:opacity-90 transition-all active:scale-95 flex items-center gap-2 shadow-lg hover:shadow-xl"
